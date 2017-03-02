@@ -4,7 +4,13 @@ class NotFound extends Component{
   render(){
     return (
         <div className="not-found">
-          Oops, seems like some page's lost...
+          <div>
+            <h2>Welcome to Warden</h2>
+          </div>
+          <p className="not-found-message">
+            ...looks like something's lost...
+          </p>
+
         </div>
     )
   }
