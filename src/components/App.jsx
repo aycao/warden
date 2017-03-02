@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import '../styles/app.scss';
+
 import 'jquery';
-import 'bootstrap/dist/css/bootstrap.css';
+import '../styles/app.scss';
+
+
 
 import Dashboard from './dashboard/Dashboard';
 

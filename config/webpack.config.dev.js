@@ -130,7 +130,6 @@ module.exports = {
       // scss
       {
         test: /\.scss$/,
-        include: paths.appSrc,
         loaders: ["style", "css", "sass"]
       },
       // "postcss" loader applies autoprefixer to our CSS.
