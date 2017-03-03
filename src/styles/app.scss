@@ -1,7 +1,14 @@
 @import "wardenBootstrapOverride";
-@import "~bootstrap/scss/bootstrap";
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "wardenVariables";
+
 
 @import "home";
 @import "notFound";
+@import "dashboard";
+@import "sideNav";
+@import "mainPanel";
 
 

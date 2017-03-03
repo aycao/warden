@@ -1,0 +1,8 @@
+.main-panel {
+  border: 1px solid blue;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  float: right;
+  width: calc(100% - #{$side-nav-width});
+}

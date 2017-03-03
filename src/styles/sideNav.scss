@@ -1,4 +1,16 @@
-.side-nav{
-  position: fixed;
+.side-nav {
+  border: 1px solid red;
+  width: $side-nav-width;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
 
+  .nav li a{
+    box-shadow: $side-nav-item-box-shadow;
+    margin-left: $side-nav-item-margin-left;
+    margin-right: $side-nav-item-margin-right;
+    margin-top: $side-nav-item-margin-top;
+    margin-bottom: $side-nav-item-margin-bottom;
+  }
 }

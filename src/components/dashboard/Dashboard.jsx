@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 
+import SideNav from './SideNav';
+import MainPanel from './MainPanel';
+
 class Dashboard extends Component{
   render(){
     return (
         <div className="dashboard">
-          <button className="btn btn-danger"> dashboard</button>
+          <SideNav/>
+          <MainPanel/>
         </div>
     )
   }
