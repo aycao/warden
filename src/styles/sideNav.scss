@@ -11,14 +11,9 @@
   }
 
   .nav li a{
-
     margin-left: $side-nav-item-margin-left;
     margin-right: $side-nav-item-margin-right;
     margin-top: $side-nav-item-margin-top;
     margin-bottom: $side-nav-item-margin-bottom;
-
-    .active {
-      box-shadow: $side-nav-item-box-shadow;
-    }
   }
 }
