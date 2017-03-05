@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
+
 import {Nav, NavItem} from 'react-bootstrap';
 
 class SideNav extends Component{
@@ -21,9 +23,9 @@ class SideNav extends Component{
                stacked
                activeKey={this.state.activeNavTab}
                onSelect={this.handleNavTabSelect}>
-            <NavItem eventKey={'dashboard'}>NavItem 1 content</NavItem>
-            <NavItem eventKey={'second'}>NavItem 2 content</NavItem>
-            <NavItem eventKey={'third'}>NavItem 3 content</NavItem>
+            <NavItem eventKey={'dashboard'} onClick={() => browserHistory.push('/dashboard')}>Dashboard</NavItem>
+            <NavItem eventKey={'second'} onClick={() => browserHistory.push('/second')}>Second</NavItem>
+            <NavItem eventKey={'third'} onClick={() => browserHistory.push('/third')}>Second</NavItem>
           </Nav>
         </div>
     )
