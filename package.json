@@ -50,8 +50,10 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
+    "express": "^4.15.0",
     "install": "^0.8.7",
     "jquery": "^3.1.1",
+    "morgan": "^1.8.1",
     "npm": "^4.3.0",
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.7",
@@ -64,6 +66,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start:server": "node server",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
