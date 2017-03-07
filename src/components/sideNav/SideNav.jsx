@@ -1,33 +1,39 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 
-import {Nav, NavItem} from 'react-bootstrap';
+import {Drawer, List, ListItem, makeSelectable, RaisedButton} from 'material-ui';
+import {ActionDashboard, SocialPerson, ContentContentPaste} from 'material-ui/svg-icons';
+
+const SelectableList = makeSelectable(List);
 
 class SideNav extends Component{
   constructor(props){
     super(props);
     this.state = {
       activeNavTab: 'dashboard',
+      drawerOpened: true,
     };
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
     this.handleNavTabSelect = this.handleNavTabSelect.bind(this);
   }
 
-  handleNavTabSelect(key){
+  handleDrawerToggle() {
+    this.setState({drawerOpened: !this.state.drawerOpened});
+  }
+
+  handleNavTabSelect(event, key){
     this.setState({activeNavTab: key})
   }
 
   render(){
     return (
-        <div className="side-nav">
-          <Nav bsStyle="pills"
-               stacked
-               activeKey={this.state.activeNavTab}
-               onSelect={this.handleNavTabSelect}>
-            <NavItem eventKey={'dashboard'} onClick={() => browserHistory.push('/dashboard')}>Dashboard</NavItem>
-            <NavItem eventKey={'second'} onClick={() => browserHistory.push('/second')}>Second</NavItem>
-            <NavItem eventKey={'third'} onClick={() => browserHistory.push('/third')}>Second</NavItem>
-          </Nav>
-        </div>
+        <Drawer open={this.state.drawerOpened} className="side-nav" width={300}>
+          <SelectableList value={this.state.activeNavTab} onChange={this.handleNavTabSelect}>
+            <ListItem value={'dashboard'} primaryText={'Dashboard'} leftIcon={<ActionDashboard/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
+            <ListItem value={'second'} primaryText={'Second'} leftIcon={<ContentContentPaste/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
+            <ListItem value={'third'} primaryText={'Third'} leftIcon={<ActionDashboard/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
+          </SelectableList>
+        </Drawer>
     )
   }
 }

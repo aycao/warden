@@ -1,8 +1,9 @@
 // icons and fonts
 @import "_icons.css";
+@import "_fonts.css";
 
 // bootstrap and material & overrides
-@import "wardenVariables";
+@import "wardenTheme";
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
