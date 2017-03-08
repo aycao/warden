@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import 'jquery';
 import '../styles/app.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import SideNav from './sideNav/SideNav';
@@ -14,7 +14,7 @@ injectTapEventPlugin();
 class App extends Component {
   render() {
     return (
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
           <div className="app">
             <SideNav/>
             {this.props.children}

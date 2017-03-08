@@ -31,7 +31,7 @@ class SideNav extends Component{
           <SelectableList value={this.state.activeNavTab} onChange={this.handleNavTabSelect}>
             <ListItem value={'dashboard'} primaryText={'Dashboard'} leftIcon={<ActionDashboard/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
             <ListItem value={'second'} primaryText={'Second'} leftIcon={<ContentContentPaste/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
-            <ListItem value={'third'} primaryText={'Third'} leftIcon={<ActionDashboard/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
+            <ListItem value={'third'} primaryText={'Third'} leftIcon={<SocialPerson/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
           </SelectableList>
         </Drawer>
     )
