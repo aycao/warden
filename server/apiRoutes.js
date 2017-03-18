@@ -1,14 +1,15 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const dbLogin = require('./dbLogin');
-
-mongoose.connect(dbLogin.address);
 
 let router = express.Router();
 
+const schoolController = require('./controllers/schools');
 router.route('/')
     .get((req, res) => {
       res.json({message: 'warden API'});
+    });
+router.route('/schools')
+    .get((req, res) => {
+      res.json(schoolController.findAll());
     });
 
 module.exports = router;
