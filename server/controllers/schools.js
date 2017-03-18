@@ -1,7 +1,6 @@
 const School = require('../models/schools');
+const {SimpleController} = require('../utils');
 
-const findAll = () => {
-  School.find((err, all) => {return all});
-};
+const schoolController = new SimpleController(School);
 
-module.exports = {findAll};
+module.exports = {schoolController};
