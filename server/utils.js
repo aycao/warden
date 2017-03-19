@@ -1,21 +1,51 @@
-const simpleModelView = (controller) => {
+const createSimpleModelView = (controller) => {
   let router = require('express').Router();
   router.route('/')
-      .get((req, res) => {
-        res.json(controller.findAll());
+      .get((req, res, next) => {
+        controller.findAll().exec()
+            .then(docs => {
+              res.json(docs);
+            })
+            .catch(err => {
+              return next(err);
+            });
       })
-      .post((req, res) => {
-        res.json(controller.create(req.body));
+      .post((req, res, next) => {
+        controller.create(req.body)
+            .then(doc => {
+              res.status(201).json(doc);
+            })
+            .catch(err => {
+              return next(err);
+            });
       });
   router.route('/:id')
-      .get((req, res) => {
-        res.json(controller.findById(req.params.id));
+      .get((req, res, next) => {
+        controller.findById(req.params.id).exec()
+            .then(doc => {
+              res.json(doc);
+            })
+            .catch(err => {
+              return next(err);
+            });
       })
-      .put((req, res) => {
-        res.json(controller.update(req.params.id, req.body));
+      .put((req, res, next) => {
+        controller.update(req.params.id, req.body).exec()
+            .then(doc => {
+              res.json(doc);
+            })
+            .catch(err => {
+              return next(err);
+            });
       })
-      .delete((req, res) => {
-        res.json(controller.delete(req.params.id));
+      .delete((req, res, next) => {
+        controller.delete(req.params.id).exec()
+            .then(() => {
+              res.json({});
+            })
+            .catch(err => {
+              return next(err);
+            });
       });
 
   return router;
@@ -24,60 +54,39 @@ const simpleModelView = (controller) => {
 class SimpleController{
   constructor(model){
     this.Model = model;
-    this.findAll = this.findAll.bind(this);
   }
 
   findAll(){
-    this.Model.find((err, all) => {
-      if(!err){
-        return all;
-      }else{
-        const msg = `Error findAll on model ${this.Model.modelName}` ;
-        console.log(err);
-        return {err, msg};
-      }
-    });
+    return this.Model.find();
   }
 
   findById(id){
-    this.Model.findById(id, (err, doc) => {
-      if(!err){
-        return doc;
-      }else{
-        const msg = `Error findById on model ${this.Model.modelName}`;
-        console.log(err);
-        return {err, id, msg};
-      }
-    })
+    return this.Model.findById(id);
   }
 
   create(obj){
-    this.Model.create(obj, (err, doc) => {
-      if(!err){
-        return doc;
-      }else{
-        const msg = `Error create on model ${this.Model.modelName}`;
-        console.log(err);
-        return {err, doc: obj, msg};
-      }
-    })
+    return this.Model.create(obj);
   }
 
   update(id, obj) {
-    this.Model.findByIdAndUpdate(id, obj, (err, doc) => {
-      if(!err){
-        return doc;
-      }else{
-        const msg = `Error update on model ${this.Model.modelName}`;
-        console.log(err);
-        return {err, doc: obj, msg};
-      }
-    });
+    return this.Model.findByIdAndUpdate(id, obj);
   }
 
+  delete(id) {
+    return this.Model.findByIdAndRemove(id);
+  }
 }
 
+const simpleErrorHandler = (err, req, res, next) => {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: err,
+  });
+};
+
 module.exports = {
-  simpleModelView,
+  simpleErrorHandler,
+  createSimpleModelView,
   SimpleController,
 };
