@@ -2,50 +2,20 @@ const createSimpleModelApiRoute = (controller) => {
   let router = require('express').Router();
   router.route('/')
       .get((req, res, next) => {
-        controller.findAll().exec()
-            .then(docs => {
-              res.json(docs);
-            })
-            .catch(err => {
-              return next(err);
-            });
+        controller.findAll(req, res, next);
       })
       .post((req, res, next) => {
-        controller.create(req.body)
-            .then(doc => {
-              res.status(201).json(doc);
-            })
-            .catch(err => {
-              return next(err);
-            });
+        controller.create(req, res, next);
       });
   router.route('/:id')
       .get((req, res, next) => {
-        controller.findById(req.params.id).exec()
-            .then(doc => {
-              res.json(doc);
-            })
-            .catch(err => {
-              return next(err);
-            });
+        controller.findById(req, res, next);
       })
       .put((req, res, next) => {
-        controller.update(req.params.id, req.body).exec()
-            .then(doc => {
-              res.json(doc);
-            })
-            .catch(err => {
-              return next(err);
-            });
+        controller.update(req, res, next);
       })
       .delete((req, res, next) => {
-        controller.delete(req.params.id).exec()
-            .then(() => {
-              res.json({});
-            })
-            .catch(err => {
-              return next(err);
-            });
+        controller.delete(req, res, next);
       });
 
   return router;
@@ -56,24 +26,59 @@ class SimpleController{
     this.Model = model;
   }
 
-  findAll(){
-    return this.Model.find();
+  findAll(req, res, next){
+    return this.Model.find().exec()
+        .then(docs => {
+          res.json(docs);
+        })
+        .catch(err => {
+          return next(err);
+        });
   }
 
-  findById(id){
-    return this.Model.findById(id);
+  findById(req, res, next){
+    const id = req.params.id;
+    return this.Model.findById(id).exec()
+        .then(doc => {
+          res.json(doc);
+        })
+        .catch(err => {
+          return next(err);
+        });
   }
 
-  create(obj){
-    return this.Model.create(obj);
+  create(req, res, next){
+    const obj = req.body;
+    return this.Model.create(obj)
+        .then(doc => {
+          res.status(201).json(doc);
+        })
+        .catch(err => {
+          return next(err);
+        });
   }
 
-  update(id, obj) {
-    return this.Model.findByIdAndUpdate(id, obj);
+  update(req, res, next) {
+    const id = req.params.id;
+    const obj = req.body;
+    return this.Model.findByIdAndUpdate(id, obj).exec()
+        .then(doc => {
+          res.json(doc);
+        })
+        .catch(err => {
+          return next(err);
+        });
   }
 
-  delete(id) {
-    return this.Model.findByIdAndRemove(id);
+  delete(req, res, next) {
+    const id = req.params.id;
+    return this.Model.findByIdAndRemove(id).exec()
+        .then(() => {
+          res.json({});
+        })
+        .catch(err => {
+          return next(err);
+        });
   }
 }
 
