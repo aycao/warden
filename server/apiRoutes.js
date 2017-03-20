@@ -2,14 +2,14 @@ const express = require('express');
 
 let router = express.Router();
 
-const schoolView = require('./apiViews/schools');
-const addressView = require('./apiViews/addresses');
+const schoolModelView = require('./apiViews/schools');
+const addressModelView = require('./apiViews/addresses');
 
 router.get('/', (req, res) => {
   res.json({message: 'welcome to warden api'});
 });
 
-router.use('/schools', schoolView);
-router.use('/addresses', addressView);
+router.use('/schools', schoolModelView);
+router.use('/addresses', addressModelView);
 
 module.exports = router;
