@@ -1,6 +1,6 @@
 const {createSimpleModelView} = require('../utils');
 
 const {schoolController} = require('../controllers/schools');
-const schoolView = createSimpleModelView(schoolController);
+const schoolModelView = createSimpleModelView(schoolController);
 
-module.exports = schoolView;
+module.exports = schoolModelView;
