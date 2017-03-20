@@ -1,4 +1,4 @@
-const createSimpleModelView = (controller) => {
+const createSimpleModelApiRoute = (controller) => {
   let router = require('express').Router();
   router.route('/')
       .get((req, res, next) => {
@@ -77,7 +77,7 @@ class SimpleController{
   }
 }
 
-const simpleErrorHandler = (err, req, res, next) => {
+const simpleErrorHandler = (err, req, res) => {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -87,6 +87,6 @@ const simpleErrorHandler = (err, req, res, next) => {
 
 module.exports = {
   simpleErrorHandler,
-  createSimpleModelView,
+  createSimpleModelApiRoute,
   SimpleController,
 };
