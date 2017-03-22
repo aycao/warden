@@ -82,16 +82,32 @@ class SimpleController{
   }
 }
 
-const simpleErrorHandler = (err, req, res) => {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: err,
-  });
+const apiErrorHandler = (err, req, res, next) => {
+  if(err){
+    res.status(err.status || 500);
+    res.json(err);
+    next(err);
+  }
+};
+
+const simpleErrorHandler = (err, req, res, next) => {
+  res.status(500);
+  res.render('error', { error: err });
+};
+
+const createIntegerValidate = (fieldName) => {
+  return {
+    validator: v => {
+      return Number.isInteger(v);
+    },
+    message: `${fieldName} must be an integer`,
+  }
 };
 
 module.exports = {
+  SimpleController,
+  apiErrorHandler,
   simpleErrorHandler,
   createSimpleModelApiRoute,
-  SimpleController,
+  createIntegerValidate,
 };

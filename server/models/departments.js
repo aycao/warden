@@ -5,16 +5,21 @@ const roles = ['professor', 'teacher', 'ta', 'admin', 'supply'];
 
 const departmentSchema = new Schema({
   name: {type: String, required: true},
-  chair: {type: Schema.ObjectId, ref: 'Staff'},
-  staff: [{type: Schema.ObjectId, ref: 'DepartmentStaffRoleRelation'}],
+  chair: {type: Schema.Types.ObjectId, ref: 'Staff'},
+  staff: [{type: Schema.Types.ObjectId, ref: 'DepartmentStaffRoleRelation'}],
 });
 
-module.exports = mongoose.model('Department', departmentSchema);
+const Department = mongoose.model('Department', departmentSchema);
 
 const departmentStaffRoleRelationSchema = new Schema({
-  department: {type: Schema.ObjectId, ref: 'Department'},
-  staff: {type: Schema.ObjectId, ref: 'Staff'},
-  role: {type: String, validate: {validator: (v) => {return roles.includes(v);}}},
+  department: {type: Schema.Types.ObjectId, ref: 'Department', required:true},
+  staff: {type: Schema.Types.ObjectId, ref: 'Staff', required:true},
+  role: {type: String, enum: roles, required:true},
 });
 
-module.exports = mongoose.model('DepartmentStaffRoleRelation', departmentStaffRoleRelationSchema);
+const DepartmentStaffRoleRelation = mongoose.model('DepartmentStaffRoleRelation', departmentStaffRoleRelationSchema);
+
+module.exports = {
+  Department,
+  DepartmentStaffRoleRelation,
+};

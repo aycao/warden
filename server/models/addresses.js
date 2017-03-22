@@ -1,15 +1,19 @@
 const mongoose = require('../config/db');
 const Schema = mongoose.Schema;
+const {createIntegerValidate} = require('../utils');
 
 const provinces = ['AB', 'BC', 'MB', 'NB', 'NL', 'NT', 'NS', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'];
-const postalCodeValidator = /^[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ][0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]$/;
+const postalCodeValidator = /^[A-Z][0-9][A-Z][0-9][A-Z][0-9]$/;
+const streetNumberValidate = createIntegerValidate('streetNumber');
 
 const addressSchema = new Schema({
-  streetNumber: {type: Number, required: true, validate: {validator: v => {return Number.isInteger(v)}}},
+  streetNumber: {type: Number, required: true, validate: streetNumberValidate},
   street: {type: String, required: true},
   city: {type: String},
-  province: {type: String, validate: {validator: (v) => provinces.includes(v)}},
-  postalCode: {type: String, validate: {validator: (v) => {return postalCodeValidator.test(v)}}},
+  province: {type: String, enum: provinces},
+  postalCode: {type: String, match: postalCodeValidator},
 });
+
+addressSchema.index({streetNumber: 1, street: 1, city: 1}, {unique: true});
 
 module.exports = mongoose.model('Address', addressSchema);

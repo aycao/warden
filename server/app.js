@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 
-const {simpleErrorHandler} = require('./utils');
+const {apiErrorHandler, simpleErrorHandler} = require('./utils');
 const apiRoutes = require('./routes/api');
 
 const app = express();
@@ -14,14 +14,17 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(simpleErrorHandler);
 
 // API route
 app.use('/api', apiRoutes);
+app.use(apiErrorHandler);
 
 // UI route
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
+
+// Error handler
+app.use(simpleErrorHandler);
 
 module.exports = app;
