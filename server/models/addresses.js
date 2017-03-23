@@ -2,7 +2,7 @@ const mongoose = require('../config/db');
 const Schema = mongoose.Schema;
 const {createIntegerValidate} = require('../utils');
 
-const provinces = ['AB', 'BC', 'MB', 'NB', 'NL', 'NT', 'NS', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'];
+const {provinces} = require('../constants');
 const postalCodeValidator = /^[A-Z][0-9][A-Z][0-9][A-Z][0-9]$/;
 const streetNumberValidate = createIntegerValidate('streetNumber');
 

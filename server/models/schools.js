@@ -6,7 +6,6 @@ const schoolSchema = new Schema({
   address: {type: Schema.Types.ObjectId, ref: 'Address'},
   president: {type: Schema.Types.ObjectId, ref: 'Staff'},
   vps: [{type: Schema.Types.ObjectId, ref: 'Staff'}],
-  departments: [{type: Schema.Types.ObjectId, ref: 'Department'}],
 });
 
 schoolSchema.index({name: 1, address: 1}, {unique: true});

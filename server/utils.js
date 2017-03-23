@@ -91,8 +91,13 @@ const apiErrorHandler = (err, req, res, next) => {
 };
 
 const simpleErrorHandler = (err, req, res, next) => {
-  res.status(500);
-  res.render('error', { error: err });
+  console.log(err);
+  try{
+    res.status(500);
+    res.render('error', { error: err });
+  }catch(err){
+
+  }
 };
 
 const createIntegerValidate = (fieldName) => {

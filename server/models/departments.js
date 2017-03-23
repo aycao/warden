@@ -7,6 +7,7 @@ const departmentSchema = new Schema({
   name: {type: String, required: true},
   chair: {type: Schema.Types.ObjectId, ref: 'Staff'},
   staff: [{type: Schema.Types.ObjectId, ref: 'DepartmentStaffRoleRelation'}],
+  school: {type: Schema.Types.ObjectId, ref: 'School'},
 });
 
 const Department = mongoose.model('Department', departmentSchema);
