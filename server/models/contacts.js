@@ -1,10 +1,10 @@
 const mongoose = require('../config/db');
 const Schema = mongoose.Schema;
 
-const contactTypes = ['phone', 'email', 'wechat'];
+const {contactTypes} = require('../constants');
 
 const contactSchema = new Schema({
-  type: {type: String, required: true, enum: contactTypes},
+  type: {type: String, required: true, enum: Object.keys(contactTypes)},
   value: {type: String, required: true},
   primary: {type: Boolean, default: false}
 });

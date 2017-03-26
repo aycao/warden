@@ -13,6 +13,22 @@ schoolController.findById = (req, res, next) => {
         foreignField: 'school',
         as: 'departments',
       })
+      .lookup({
+        from: 'students',
+        localField: '_id',
+        foreignField: 'school',
+        as: 'students',
+      })
+      .project({
+        name: 1,
+        president: 1,
+        vps: 1,
+        address: 1,
+        departmentCount: {$size: '$departments'},
+        studentCount: {$size: '$students'},
+        activeStudentCount: {$size: {$filter: {input: '$students', as: 'activeStudent', cond: {$eq: ['$activeStudent.isActive', true]}}}},
+        departments: 1,
+      })
       .exec()
       .then(doc => {
         School.populate(doc, {path: 'address president', populate: {path: 'address'}})

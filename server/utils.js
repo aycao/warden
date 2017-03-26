@@ -27,9 +27,15 @@ class SimpleController{
   }
 
   findAll(req, res, next){
+    const query = req.query; // TODO: filter by query (filterBackend)
     return this.Model.find().exec()
         .then(docs => {
-          res.json(docs);
+          res.json({count: docs.length, docs});
+          // let arr = [];
+          // for(var i = 0, length = docs.length; i < length; i++){
+          //   arr.push('"' + docs[i]["_id"] + '"');
+          // }
+          // res.send(arr.join(","));
         })
         .catch(err => {
           return next(err);
