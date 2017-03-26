@@ -26,7 +26,7 @@ schoolController.findById = (req, res, next) => {
         address: 1,
         departmentCount: {$size: '$departments'},
         studentCount: {$size: '$students'},
-        activeStudentCount: {$size: {$filter: {input: '$students', as: 'activeStudent', cond: {$eq: ['$activeStudent.isActive', true]}}}},
+        activeStudentCount: {$size: {$filter: {input: '$students', as: 'activeStudent', cond: {$eq: ['$$activeStudent.isActive', true]}}}},
         departments: 1,
       })
       .exec()

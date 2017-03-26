@@ -19,5 +19,4 @@ yarn-error.log*
 
 #login config
 /server/config/dbLogin.js
-/setup
 

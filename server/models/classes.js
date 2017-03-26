@@ -7,10 +7,10 @@ const {weekdays} = require('../constants');
 const sectionIntegerValidate = createIntegerValidate('section');
 const weekdayIntegerValidate = createIntegerValidate('weekday');
 
-const ClassTime = (key, options) => {
-  mongoose.SchemaTypes.call(this, key, options, 'ClassTime');
+function ClassTime(key, options){
+  mongoose.SchemaType.call(this, key, options, 'ClassTime');
 };
-ClassTime.prototype = Object.create(mongoose.SchemaTypes.prototype);
+ClassTime.prototype = Object.create(mongoose.SchemaType.prototype);
 ClassTime.prototype.cast = (val) => {
   // Must has keys: weekdays: Array
   //                startTime: String
