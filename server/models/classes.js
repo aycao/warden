@@ -1,12 +1,13 @@
 const moment = require('moment');
 const mongoose = require('../config/db');
 const Schema = mongoose.Schema;
+const Model = mongoose.Model;
 const {createIntegerValidate} = require('../utils');
 const {weekdays} = require('../constants');
 
 const sectionIntegerValidate = createIntegerValidate('section');
-const weekdayIntegerValidate = createIntegerValidate('weekday');
-
+const weekdaysIntergerValidate = createIntegerValidate('weekday');
+/*
 function ClassTime(key, options){
   mongoose.SchemaType.call(this, key, options, 'ClassTime');
 };
@@ -41,34 +42,82 @@ ClassTime.prototype.cast = (val) => {
     throw new Error('ClassTime: entries of weekdays must be one of "'+ weekdayIndexes.join((', ')) + '"');
   }
   // validate time/dates
-  if(!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(val.startTime)){
+  const startTime = moment(val.startTime, 'HH:mm', true);
+  const endTime = moment(val.endTime, 'HH:mm', true);
+  const startDate = moment(val.startDate, 'YYYY-MM-DD', true);
+  const endDate = moment(val.endDate, 'YYYY-MM-DD', true);
+  if(!startDate.isValid()){
     throw new Error('ClassTime: startTime must be of form HH:mm');
   }
-  if(!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(val.endTime)){
+  if(!endDate.isValid()){
     throw new Error('ClassTime: endTime must be of form HH:mm');
   }
-  if(!moment(val.startDate, 'YYYY-MM-DD', true).isValid()){
+  if(!startDate.isValid()){
     throw new Error('ClassTime: startDate must be of form YYYY-MM-DD');
   }
-  if(!moment(val.endDate, 'YYYY-MM-DD', true).isValid()){
+  if(!endDate.isValid()){
     throw new Error('ClassTime: endDate must be of form YYYY-MM-DD');
+  }
+  if(startTime <= endTime){
+    throw new Error('ClassTime: startTime must be older then endTime');
+  }
+  if(startDate <= endDate){
+    throw new Error('ClassTime: startDate must be older then endDate');
   }
 
   return val;
 };
 
-Schema.Types.ClassTime = ClassTime;
+mongoose.Schema.Types.ClassTime = ClassTime;
+*/
 
+const startEndTimeValidate = {
+  validator: (v) => {
+    return moment(v, 'HH:mm', true).isValid();
+  },
+  message: "start/endTime must be of form HH:mm"
+};
+const startEndDateValidate = {
+  validator: (v) => {
+    return moment(v, 'YYYY-MM-DD', true).isValid();
+  },
+  message: "start/endDate must be of form YYYY-MM-DD"
+};
 
+// ClassTime
+const classTimeSchema = new Schema({
+  class: {type: Schema.Types.ObjectId, ref: 'Class'},
+  weekdays: [{type: Number, required: true, validate: weekdaysIntergerValidate, min: 0, max: 6}],
+  startTime: {type: String, required: true, validate: startEndTimeValidate},
+  endTime: {type: String, required: true, validate: startEndTimeValidate},
+  startDate: {type: String, required: true, validate: startEndDateValidate},
+  endDate: {type: String, required: true, validate: startEndDateValidate},
+});
+const ClassTime = mongoose.model('ClassTime', classTimeSchema);
+
+// ClassStudentRelation
+const classStudentRelationSchema = new Schema({
+  class: {type: Schema.Types.ObjectId, ref: 'Class', required: true},
+  student: {type: Schema.Types.ObjectId, ref: 'Student', required: true},
+});
+classStudentRelationSchema.index({class: 1, student: 1}, {unique: true});
+const ClassStudentRelation = mongoose.model('ClassStudentRelation', classStudentRelationSchema);
+
+// Class
 const classSchema = new Schema({
   course: {type: Schema.Types.ObjectId, ref: 'Course', required: true},
   term: {type: Schema.Types.ObjectId, ref: 'Term', required: true},
   section: {type: Number, validate: sectionIntegerValidate, min: 1, max: 99},
-  classTimes: [{type: Schema.Types.ClassTime, required: true}],
+  classTimes: [{type: Schema.Types.ObjectId, ref: 'ClassTime'}],
   prof: {type: Schema.Types.ObjectId, ref: 'Staff'},
   tas: [{type: Schema.Types.ObjectId, ref: 'Staff'}],
-  students: [{type: Schema.Types.ObjectId, ref: 'Student'}],
   description: {type: String},
 });
+classSchema.index({course: 1, term: 1, section: 1, classTime: 1}, {unique: true});
+const Class = mongoose.model('Class', classSchema);
 
-module.exports = mongoose.model('Class', classSchema);
+module.exports = {
+  Class,
+  ClassTime,
+  ClassStudentRelation,
+};

@@ -6,9 +6,10 @@ const roles = ['professor', 'teacher', 'ta', 'admin', 'supply'];
 const departmentSchema = new Schema({
   name: {type: String, required: true},
   chair: {type: Schema.Types.ObjectId, ref: 'Staff'},
-  staff: [{type: Schema.Types.ObjectId, ref: 'DepartmentStaffRoleRelation'}],
   school: {type: Schema.Types.ObjectId, ref: 'School'},
 });
+
+departmentSchema.index({name: 1, school: 1}, {unique: true});
 
 const Department = mongoose.model('Department', departmentSchema);
 
@@ -17,6 +18,8 @@ const departmentStaffRoleRelationSchema = new Schema({
   staff: {type: Schema.Types.ObjectId, ref: 'Staff', required:true},
   role: {type: String, enum: roles, required:true},
 });
+
+departmentStaffRoleRelationSchema.index({department: 1, staff: 1, role: 1}, {unique: true});
 
 const DepartmentStaffRoleRelation = mongoose.model('DepartmentStaffRoleRelation', departmentStaffRoleRelationSchema);
 

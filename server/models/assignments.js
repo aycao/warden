@@ -14,4 +14,6 @@ const assignmentSchema = new Schema({
   description: {type: String},
 });
 
+assignmentSchema.index({class: 1, link: 1}, {unique: true});
+
 module.exports = mongoose.model('Assignment', assignmentSchema);

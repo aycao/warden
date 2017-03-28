@@ -10,7 +10,7 @@ const addressSchema = new Schema({
   streetNumber: {type: Number, required: true, validate: streetNumberValidate},
   street: {type: String, required: true},
   city: {type: String},
-  province: {type: String, enum: provinces},
+  province: {type: String, enum: Object.keys(provinces)},
   postalCode: {type: String, match: postalCodeValidator},
 });
 

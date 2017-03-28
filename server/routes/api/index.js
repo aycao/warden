@@ -5,7 +5,9 @@ let router = express.Router();
 const addressApiRoute = require('./addresses');
 const assignmentMarkApiRoute = require('./assignmentMarks');
 const assignmentApiRoute = require('./assignments');
-const classApiRoute = require('./classes');
+const {classApiRoute,
+    classTimeApiRoute,
+    classStudentRelationApiRoute} = require('./classes');
 const contactApiRoute = require('./contacts');
 const courseApiRoute = require('./courses');
 const {departmentApiRoute,
@@ -24,6 +26,8 @@ router.use('/addresses', addressApiRoute);
 router.use('/assignment-marks', assignmentMarkApiRoute);
 router.use('/assignments', assignmentApiRoute);
 router.use('/classes', classApiRoute);
+router.use('/class-times', classTimeApiRoute);
+router.use('/class-student-relation', classStudentRelationApiRoute);
 router.use('/contacts', contactApiRoute);
 router.use('/courses', courseApiRoute);
 router.use('/departments', departmentApiRoute);

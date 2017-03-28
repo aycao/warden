@@ -1,11 +1,13 @@
-const provinces = ['AB', 'BC', 'MB', 'NB', 'NL', 'NT', 'NS', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'];
+const provinces = {
+  AB: 'Alberta', BC: 'British Columbia', MB: 'Manitoba', NB: 'New Brunswick',
+  NL: 'Newfoundland and Labrador', NT: 'Northwest Territory', NS: 'Nova Scotia',
+  NU: 'Nunavut', ON: 'Ontario', PE: 'PEI', QC: 'Quebec',
+  SK: 'Saskatchewan', YT: 'Yukon'};
 const genders = {
-  m: 'male', f: 'female', n: 'natural', p: 'prefer not to tell',
+  m: 'male', f: 'female', n: 'neutral', p: 'prefer not to tell',
 };
 const terms = {
-  w: 'Winter',
-  s: 'Spring',
-  f: 'Fall',
+  w: 'Winter', s: 'Spring', f: 'Fall',
 };
 const weekdays = {
   0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday',
@@ -14,38 +16,9 @@ const weekdays = {
 const contactTypes = {
   phone: 'Phone', email: 'Email', wechat: 'WeChat'
 };
-const courseCodes = [
-    'AAA', 'ABC',
-    'BBB',
-    'CCC',
-    'DDD',
-    'EEE', 'ECE',
-    'FFF', 'FUNK',
-    'GGG', 'GIRL',
-    'HHH', 'HELP',
-    'III', 'ILOVEU',
-    'JJJ',
-    'KKK', 'KO',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-];
 
 module.exports = {
   contactTypes,
-  courseCodes,
   genders,
   provinces,
   terms,

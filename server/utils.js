@@ -24,22 +24,29 @@ const createSimpleModelApiRoute = (controller) => {
 class SimpleController{
   constructor(model){
     this.Model = model;
+    this.sort = {};
   }
 
   findAll(req, res, next){
     const query = req.query; // TODO: filter by query (filterBackend)
-    return this.Model.find().exec()
+    return this.Model.find().sort(this.sort).exec()
         .then(docs => {
           res.json({count: docs.length, docs});
-          // let arr = [];
-          // for(var i = 0, length = docs.length; i < length; i++){
-          //   arr.push('"' + docs[i]["_id"] + '"');
-          // }
-          // res.send(arr.join(","));
         })
         .catch(err => {
           return next(err);
         });
+    // return this.Model.find().select('_id').sort(this.sort).exec()
+    //     .then(docs => {
+    //       let arr = [];
+    //       for(var i = 0, length = docs.length; i < length; i++){
+    //         arr.push('"' + docs[i]["_id"] + '"');
+    //       }
+    //       res.send(arr.join(","));
+    //     })
+    //     .catch(err => {
+    //       return next(err);
+    //     });
   }
 
   findById(req, res, next){
