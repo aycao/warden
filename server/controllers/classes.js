@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const moment = require('moment');
 
 const {Class,
@@ -72,5 +73,26 @@ classTimeController.update = (req, res, next) => {
         return next(err);
       });
 };
+
+classController.findById = (req, res, next) => {
+  const id = req.params.id;
+  return Class.aggregate()
+      .match({
+        _id: mongoose.Types.ObjectId(id),
+      })
+      .lookup({
+        from: 'classtimes',
+        localField: '_id',
+        foreignField: 'class',
+        as: 'classTimes',
+      })
+      .exec()
+      .then(doc => {
+        res.json(doc);
+      })
+      .catch(err => {
+        return next(err);
+      });
+}
 
 module.exports = {classController, classTimeController, classStudentRelationController};

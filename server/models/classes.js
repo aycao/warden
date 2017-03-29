@@ -108,7 +108,6 @@ const classSchema = new Schema({
   course: {type: Schema.Types.ObjectId, ref: 'Course', required: true},
   term: {type: Schema.Types.ObjectId, ref: 'Term', required: true},
   section: {type: Number, validate: sectionIntegerValidate, min: 1, max: 99},
-  classTimes: [{type: Schema.Types.ObjectId, ref: 'ClassTime'}],
   prof: {type: Schema.Types.ObjectId, ref: 'Staff'},
   tas: [{type: Schema.Types.ObjectId, ref: 'Staff'}],
   description: {type: String},
