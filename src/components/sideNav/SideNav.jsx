@@ -38,8 +38,11 @@ class SideNav extends Component{
               width={300}>
             <SelectableList value={this.state.activeNavTab} onChange={this.handleNavTabSelect}>
               <ListItem value={'dashboard'} primaryText={'Dashboard'} leftIcon={<ActionDashboard/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
-              <ListItem value={'second'} primaryText={'Second'} leftIcon={<ContentContentPaste/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
-              <ListItem value={'third'} primaryText={'Third'} leftIcon={<SocialPerson/>} onTouchTap={() => browserHistory.push('/dashboard')}/>
+              <ListItem value={'departments'} primaryText={'Departments'} leftIcon={<ContentContentPaste/>} onTouchTap={() => browserHistory.push('/departments')}/>
+              <ListItem value={'courses'} primaryText={'Courses'} leftIcon={<SocialPerson/>} onTouchTap={() => browserHistory.push('/courses')}/>
+              <ListItem value={'students'} primaryText={'Students'} leftIcon={<SocialPerson/>} onTouchTap={() => browserHistory.push('/students')}/>
+              <ListItem value={'classes'} primaryText={'Classes'} leftIcon={<SocialPerson/>} onTouchTap={() => browserHistory.push('/classes')}/>
+              <ListItem value={'staff'} primaryText={'Staff Directory'} leftIcon={<SocialPerson/>} onTouchTap={() => browserHistory.push('/staff')}/>
             </SelectableList>
           </Drawer>
         </div>

@@ -21,6 +21,10 @@ const createSimpleModelApiRoute = (controller) => {
   return router;
 };
 
+const makeCondation = (fieldName, cmp, val) => {
+  return {[fieldName]: {[cmp]: val}};
+};
+
 class SimpleController{
   constructor(model){
     this.Model = model;
@@ -28,10 +32,61 @@ class SimpleController{
   }
 
   findAll(req, res, next){
-    const query = req.query; // TODO: filter by query (filterBackend)
-    return this.Model.find().sort(this.sort).exec()
+    /**
+     * Filter backend (query param filter) supports:
+     * key=value
+     * key__eq=value
+     * key__gt=value
+     * key__gte=value
+     * key__lt=value
+     * key__lte=value
+     * key__ne=value
+     */
+    const query = req.query;
+    let conditionDict = {};
+    Object.keys(query).forEach((key) => {
+      if(!key.includes('__') || key.endsWith('__eq')){
+        conditionDict[key] = conditionDict[key] || {};
+        conditionDict[key]['$eq'] = query[key];
+      }else if(key.endsWith('__gt') || key.endsWith('__gte') || key.endsWith('__lt') ||
+          key.endsWith('__lte') || key.endsWith('__ne')){
+        const cmp = key.replace(/.*__/, '$');
+        const keyName = key.replace(/__(?=[^__]*$).*/, '');
+        conditionDict[keyName] = conditionDict[keyName] || {};
+        conditionDict[keyName][cmp] =  query[key];
+      }
+    });
+    let and = [];
+    Object.keys(conditionDict).forEach(fieldName => {
+      let or = [];
+      let diffCmpAnd = [];
+      const field = conditionDict[fieldName];
+      Object.keys(field).forEach(cmp => {
+        if(Array.isArray(field[cmp])){
+          field[cmp].forEach(val => {
+            const cond = makeCondation(fieldName, cmp, val);
+            or.push(cond);
+          });
+        }else{
+          const cond = makeCondation(fieldName, cmp, field[cmp]);
+          diffCmpAnd.push(cond);
+        }
+      });
+      if(or.length){
+        diffCmpAnd.push({$or: or});
+      }
+      if(diffCmpAnd.length){
+        and.push({$and: diffCmpAnd});
+      }
+    });
+    let findCond = {};
+    if(and.length){
+      findCond['$and'] = and;
+    }
+    console.log(findCond);
+    return this.Model.find(findCond).sort(this.sort).exec()
         .then(docs => {
-          res.json({count: docs.length, docs});
+          res.json({cond: findCond, count: docs.length, docs});
         })
         .catch(err => {
           return next(err);
