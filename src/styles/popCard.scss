@@ -1,0 +1,57 @@
+$icon-container-width: 80px;
+
+
+.pop-card {
+  margin-top: calc(#{$icon-container-width} / 2 + 10px);
+  margin-bottom: 10px;
+
+  .pop-card--upper-container {
+
+    display: flex;
+
+    .pop-card--icon-container {
+      background-color: #ddd;
+      width: $icon-container-width;
+      height: $icon-container-width;
+      margin-left: 15px;
+      margin-right: 15px;
+      margin-top: calc(-#{$icon-container-width / 2});
+      margin-bottom: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 60% !important;
+        height: 60% !important;
+      }
+    }
+
+    .pop-card--body-container {
+      padding-right: 15px;
+      padding-top: 5px;
+      flex: 1;
+      flex-direction: column;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+
+      .pop-card--body {
+        text-align: right;
+        font-size: 16px;
+        .pop-card--body--text {
+          font-size: 12px;
+          padding-right: 5px;
+        }
+        .pop-card--body--number {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+
+  .pop-card--footer-container {
+    padding: 5px 15px;
+  }
+}

@@ -33,7 +33,7 @@ schoolController.findById = (req, res, next) => {
       .then(doc => {
         School.populate(doc, {path: 'address president', populate: {path: 'address'}})
             .then(doc => {
-              res.json(doc)
+              res.json(doc[0])
             })
       })
       .catch(err => {

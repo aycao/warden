@@ -1,0 +1,5 @@
+const WINDOW_WIDTH_THRESHOLD = 900;
+
+export {
+  WINDOW_WIDTH_THRESHOLD,
+}
